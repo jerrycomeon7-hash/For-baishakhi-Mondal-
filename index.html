@@ -139,6 +139,68 @@
       z-index: 3;
     }
 
+    /* Heart-er bhetorer animated lekha */
+    #heart-text {
+      display: none;
+      position: fixed;
+      top: calc(50% - 20px);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 4;
+      pointer-events: none;
+      width: 85%;
+    }
+
+    .text-line {
+      opacity: 0;
+      transform: translateY(14px);
+      text-shadow: 0 0 10px #ff1a53, 0 0 18px #ff4d88;
+    }
+
+    .line-1 {
+      color: #ffffff;
+      font-size: 21px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      animation: fadeSlideIn 0.9s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .line-2 {
+      color: #ffd6e6;
+      font-size: 15px;
+      margin-bottom: 8px;
+      animation: fadeSlideIn 0.9s ease forwards;
+      animation-delay: 1.1s;
+    }
+
+    .line-3 {
+      color: #ffffff;
+      font-size: 19px;
+      font-weight: bold;
+      animation: fadeSlideIn 0.9s ease forwards, heartBeat 1.5s ease-in-out infinite;
+      animation-delay: 2.0s, 2.9s;
+    }
+
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heartBeat {
+      0%, 100% {
+        transform: scale(1);
+        text-shadow: 0 0 10px #ff1a53, 0 0 18px #ff4d88;
+      }
+      50% {
+        transform: scale(1.09);
+        text-shadow: 0 0 16px #ff1a53, 0 0 28px #ff6699;
+      }
+    }
+
     #countdown-box {
       display: none;
       position: fixed;
@@ -189,13 +251,19 @@
   <div id="photo-layer"></div>
   <canvas id="heart-canvas"></canvas>
 
+  <!-- Animated Sequence Text inside Heart -->
+  <div id="heart-text">
+    <div class="text-line line-1">Baishakhi Mondal ❤️</div>
+    <div class="text-line line-2">We will meet very soon,</div>
+    <div class="text-line line-3">I Love You, Beboo! 🥰</div>
+  </div>
+
   <div id="countdown-box">
     <div id="countdown-title">Counting down to 23rd December ❤️</div>
     <div id="timer">Loading...</div>
   </div>
 
   <script>
-    const gfName = "Baishakhi Mondal";
     const targetDate = new Date("2026-12-23T00:00:00+05:30").getTime();
     const photos = ["1.jpg.jpg", "2.jpg.jpg", "3.jpg.jpg", "4.jpg.JPG"];
 
@@ -215,6 +283,7 @@
     const photoLayer = document.getElementById("photo-layer");
     const heartCanvas = document.getElementById("heart-canvas");
     const heartCtx = heartCanvas.getContext("2d");
+    const heartText = document.getElementById("heart-text");
     const countdownBox = document.getElementById("countdown-box");
     const timerEl = document.getElementById("timer");
     const bgMusic = document.getElementById("bg-music");
@@ -263,7 +332,6 @@
     function startPopupPhotos() {
       let index = 0;
 
-      // 4-te ekdom alada kona, jeno kono chobi overlap na hoy
       const spots = [
         { top: "18px", left: "14px" },
         { top: "68px", right: "14px" },
@@ -397,22 +465,7 @@
           i++;
           requestAnimationFrame(drawStep);
         } else {
-          heartCtx.shadowBlur = 8;
-          heartCtx.shadowColor = "#ff4d88";
-          heartCtx.textAlign = "center";
-
-          heartCtx.fillStyle = "#ffffff";
-          heartCtx.font = "bold 20px Arial";
-          heartCtx.fillText(`${gfName} ❤️`, cx, cy - 20);
-
-          heartCtx.fillStyle = "#ffd6e6";
-          heartCtx.font = "15px Arial";
-          heartCtx.fillText("We will meet very soon,", cx, cy + 8);
-
-          heartCtx.fillStyle = "#ffffff";
-          heartCtx.font = "bold 18px Arial";
-          heartCtx.fillText("I Love You, Beboo! 🥰", cx, cy + 34);
-
+          heartText.style.display = "block";
           startCountdown();
         }
       }
