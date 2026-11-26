@@ -105,28 +105,28 @@
 
     .popup-photo {
       position: absolute;
-      width: 110px;
-      height: 110px;
+      width: 96px;
+      height: 96px;
       object-fit: cover;
       border-radius: 14px;
-      border: 2px solid rgba(255, 102, 153, 0.8);
+      border: 2px solid rgba(255, 102, 153, 0.85);
       box-shadow: 0 0 18px rgba(255, 26, 83, 0.65);
       opacity: 0;
       transform: scale(0.5);
-      animation: popAndFade 4.5s ease-in-out forwards;
+      animation: popAndFade 4s ease-in-out forwards;
     }
 
     @keyframes popAndFade {
       0% {
         opacity: 0;
-        transform: scale(0.5) rotate(-6deg);
+        transform: scale(0.5) rotate(-5deg);
       }
-      20% {
-        opacity: 0.85;
+      18% {
+        opacity: 0.92;
         transform: scale(1) rotate(3deg);
       }
-      80% {
-        opacity: 0.85;
+      82% {
+        opacity: 0.92;
         transform: scale(1.03) rotate(-2deg);
       }
       100% {
@@ -142,7 +142,7 @@
     #countdown-box {
       display: none;
       position: fixed;
-      bottom: 35px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -199,6 +199,14 @@
     const targetDate = new Date("2026-12-23T00:00:00+05:30").getTime();
     const photos = ["1.jpg.jpg", "2.jpg.jpg", "3.jpg.jpg", "4.jpg.JPG"];
 
+    // Background-e chobi preload
+    const preloadedImages = [];
+    photos.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      preloadedImages.push(img);
+    });
+
     const noBtn = document.getElementById("no-btn");
     const yesBtn = document.getElementById("yes-btn");
     const proposalBox = document.getElementById("proposal-box");
@@ -235,14 +243,13 @@
       heartCanvas.style.display = "block";
       musicBtn.style.display = "block";
 
-      // YES click korlei gan play hobe
       bgMusic.play().catch(err => console.log("Audio play error:", err));
 
       startFallingHearts();
       startMainHeart();
+      startPopupPhotos();
     });
 
-    // Mute / Unmute button
     musicBtn.addEventListener("click", () => {
       if (bgMusic.paused) {
         bgMusic.play();
@@ -256,12 +263,12 @@
     function startPopupPhotos() {
       let index = 0;
 
+      // 4-te ekdom alada kona, jeno kono chobi overlap na hoy
       const spots = [
-        { left: "6%", top: "6%" },
-        { left: "66%", top: "8%" },
-        { left: "5%", top: "64%" },
-        { left: "65%", top: "62%" },
-        { left: "36%", top: "5%" }
+        { top: "18px", left: "14px" },
+        { top: "68px", right: "14px" },
+        { bottom: "130px", left: "14px" },
+        { bottom: "130px", right: "14px" }
       ];
 
       function spawnPhoto() {
@@ -271,20 +278,22 @@
         img.src = photos[index % photos.length];
         img.className = "popup-photo";
 
-        const spot = spots[Math.floor(Math.random() * spots.length)];
-        img.style.left = spot.left;
-        img.style.top = spot.top;
+        const spot = spots[index % spots.length];
+        if (spot.top) img.style.top = spot.top;
+        if (spot.bottom) img.style.bottom = spot.bottom;
+        if (spot.left) img.style.left = spot.left;
+        if (spot.right) img.style.right = spot.right;
 
         photoLayer.appendChild(img);
         index++;
 
         setTimeout(() => {
           img.remove();
-        }, 4600);
+        }, 4100);
       }
 
       spawnPhoto();
-      setInterval(spawnPhoto, 1800);
+      setInterval(spawnPhoto, 1200);
     }
 
     function startCountdown() {
@@ -405,7 +414,6 @@
           heartCtx.fillText("I Love You, Beboo! 🥰", cx, cy + 34);
 
           startCountdown();
-          startPopupPhotos();
         }
       }
 
