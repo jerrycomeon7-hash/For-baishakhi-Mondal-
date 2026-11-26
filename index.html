@@ -313,15 +313,15 @@
       z-index: 30;
       justify-content: center;
       align-items: center;
-      padding: 18px;
+      padding: 14px;
     }
 
     .modal-card {
       background: linear-gradient(145deg, #2a0815, #12040a);
       border: 1.5px solid rgba(255, 102, 153, 0.7);
       border-radius: 20px;
-      padding: 22px 18px;
-      max-width: 340px;
+      padding: 20px 16px;
+      max-width: 320px;
       width: 100%;
       color: #ffe6f0;
       text-align: center;
@@ -330,9 +330,9 @@
 
     .modal-card h2 {
       font-family: 'Dancing Script', cursive;
-      font-size: 27px;
+      font-size: 26px;
       color: #ff6699;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .letter-card p {
@@ -349,6 +349,50 @@
       font-size: 14px;
       border-radius: 20px;
       margin-top: 12px;
+    }
+
+    /* Music Popup + Side Volume Wrapper */
+    .music-popup-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 365px;
+    }
+
+    .music-popup-wrap .modal-card {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Side Vertical Volume Slider */
+    .volume-side-box {
+      background: linear-gradient(145deg, #2a0815, #12040a);
+      border: 1.5px solid rgba(255, 102, 153, 0.7);
+      border-radius: 24px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(255, 26, 83, 0.35);
+    }
+
+    .vol-icon {
+      font-size: 15px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #volume-bar {
+      writing-mode: vertical-lr;
+      direction: rtl;
+      width: 8px;
+      height: 150px;
+      accent-color: #ff3377;
+      cursor: pointer;
     }
 
     /* Phone-Style Music Player */
@@ -393,19 +437,19 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 18px;
-      margin-bottom: 16px;
+      gap: 16px;
+      margin-bottom: 14px;
     }
 
     .ctrl-btn {
       background: rgba(255, 51, 119, 0.22);
       color: #ffffff;
       border: 1px solid rgba(255, 102, 153, 0.55);
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       padding: 0;
       border-radius: 50%;
-      font-size: 18px;
+      font-size: 17px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -413,13 +457,13 @@
 
     #play-pause-btn {
       background: #ff3377;
-      width: 54px;
-      height: 54px;
-      font-size: 21px;
+      width: 52px;
+      height: 52px;
+      font-size: 20px;
     }
 
     #playlist-items {
-      max-height: 165px;
+      max-height: 155px;
       overflow-y: auto;
       text-align: left;
       border-top: 1px solid rgba(255, 102, 153, 0.25);
@@ -503,29 +547,38 @@
     </div>
   </div>
 
-  <!-- Phone-Style Music Player Modal -->
+  <!-- Phone-Style Music Player Modal + Side Volume Bar -->
   <div id="music-modal" class="modal-overlay">
-    <div class="modal-card">
-      <h2>Songs For My Beboo 🎵❤️</h2>
-      <div id="current-song-name">Loading...</div>
-      <div id="song-status"></div>
+    <div class="music-popup-wrap">
+      <div class="modal-card">
+        <h2>Songs For My Beboo 🎵❤️</h2>
+        <div id="current-song-name">Loading...</div>
+        <div id="song-status"></div>
 
-      <div class="progress-wrap">
-        <input type="range" id="seek-bar" min="0" max="100" value="0">
-      </div>
-      <div class="time-row">
-        <span id="current-time">0:00</span>
-        <span id="total-time">0:00</span>
+        <div class="progress-wrap">
+          <input type="range" id="seek-bar" min="0" max="100" value="0">
+        </div>
+        <div class="time-row">
+          <span id="current-time">0:00</span>
+          <span id="total-time">0:00</span>
+        </div>
+
+        <div class="player-controls">
+          <button id="prev-btn" class="ctrl-btn">⏮️</button>
+          <button id="play-pause-btn" class="ctrl-btn">⏸️</button>
+          <button id="next-btn" class="ctrl-btn">⏭️</button>
+        </div>
+
+        <div id="playlist-items"></div>
+        <button id="close-music" class="close-btn">Hide Player</button>
       </div>
 
-      <div class="player-controls">
-        <button id="prev-btn" class="ctrl-btn">⏮️</button>
-        <button id="play-pause-btn" class="ctrl-btn">⏸️</button>
-        <button id="next-btn" class="ctrl-btn">⏭️</button>
+      <!-- Side Vertical Volume Control -->
+      <div class="volume-side-box" id="volume-box">
+        <span class="vol-icon" id="vol-up">🔊</span>
+        <input type="range" id="volume-bar" min="0" max="1" step="0.02" value="1">
+        <span class="vol-icon" id="vol-down">🔇</span>
       </div>
-
-      <div id="playlist-items"></div>
-      <button id="close-music" class="close-btn">Hide Player</button>
     </div>
   </div>
 
@@ -542,7 +595,7 @@
     // Exact uploaded song filenames
     const playlist = [
       { title: "Tum Hi Ho ❤️", file: "Tum Hi Ho .mp3" },
-      { title: "Bhalobasar Morshum 💕", file: "ভালবাসার মরশুম .mp3" },
+      { title: "Bhalobashar Morsum 💕", file: "Bhalobashar morsum.mp3" },
       { title: "Aaj Phir ✨", file: "Aaj Phir .mp3" },
       { title: "Ladki Badi Anjani Hai 🥰", file: "Ladki Badi Anjani Hai .mp3" },
       { title: "Tera Chehra 💖", file: "Tera Chehra .mp3" },
@@ -551,7 +604,7 @@
 
     let currentTrack = 0;
     let isSeeking = false;
-    const preloaderAudio = new Audio(); // Background preloader for next song
+    const preloaderAudio = new Audio();
     preloaderAudio.preload = "auto";
 
     const startScreen = document.getElementById("start-screen");
@@ -587,6 +640,9 @@
     const playPauseBtn = document.getElementById("play-pause-btn");
     const nextBtn = document.getElementById("next-btn");
     const playlistItemsEl = document.getElementById("playlist-items");
+    const volumeBar = document.getElementById("volume-bar");
+    const volUp = document.getElementById("vol-up");
+    const volDown = document.getElementById("vol-down");
 
     const letterBtn = document.getElementById("letter-btn");
     const letterModal = document.getElementById("letter-modal");
@@ -597,7 +653,7 @@
     let fxRunning = false;
 
     function getSongUrl(filename) {
-      return encodeURIComponent(filename.normalize("NFC"));
+      return encodeURIComponent(filename);
     }
 
     function preloadNextTrack(index) {
@@ -606,7 +662,6 @@
       preloaderAudio.load();
     }
 
-    // Preload photos & first song as soon as page opens
     window.addEventListener("load", () => {
       photos.forEach(p => {
         const img = new Image();
@@ -666,6 +721,24 @@
         });
       }
     }
+
+    // Volume Up / Down Control
+    volumeBar.addEventListener("input", (e) => {
+      e.stopPropagation();
+      bgMusic.volume = parseFloat(volumeBar.value);
+    });
+
+    volUp.addEventListener("click", (e) => {
+      e.stopPropagation();
+      bgMusic.volume = Math.min(1, +(bgMusic.volume + 0.2).toFixed(2));
+      volumeBar.value = bgMusic.volume;
+    });
+
+    volDown.addEventListener("click", (e) => {
+      e.stopPropagation();
+      bgMusic.volume = 0;
+      volumeBar.value = 0;
+    });
 
     bgMusic.addEventListener("waiting", () => {
       songStatus.innerText = "Buffering... ⏳";
