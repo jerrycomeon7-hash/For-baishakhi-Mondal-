@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For Baishakhi ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -30,10 +32,11 @@
     }
 
     h1 {
+      font-family: 'Dancing Script', cursive;
       color: #d60059;
-      font-size: 24px;
+      font-size: 34px;
       margin-bottom: 40px;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     .btn-group {
@@ -44,12 +47,12 @@
 
     button {
       padding: 12px 28px;
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 17px;
+      font-weight: 600;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
     }
 
     #yes-btn {
@@ -64,18 +67,27 @@
       transition: left 0.15s ease, top 0.15s ease;
     }
 
-    #music-btn {
+    /* Top Action Buttons */
+    #music-btn, #letter-btn {
       display: none;
       position: fixed;
-      top: 16px;
-      right: 16px;
+      top: 14px;
       z-index: 20;
-      padding: 8px 14px;
-      font-size: 16px;
+      padding: 7px 14px;
+      font-size: 14px;
       background: rgba(255, 26, 83, 0.35);
       color: white;
-      border: 1px solid rgba(255, 77, 136, 0.7);
+      border: 1px solid rgba(255, 102, 153, 0.75);
       border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    #music-btn {
+      right: 14px;
+    }
+
+    #letter-btn {
+      left: 14px;
     }
 
     canvas {
@@ -103,30 +115,48 @@
       pointer-events: none;
     }
 
-    .popup-photo {
+    /* Polaroid Photo Frame */
+    .polaroid {
       position: absolute;
-      width: 96px;
-      height: 96px;
-      object-fit: cover;
-      border-radius: 14px;
-      border: 2px solid rgba(255, 102, 153, 0.85);
-      box-shadow: 0 0 18px rgba(255, 26, 83, 0.65);
+      width: 104px;
+      background: #ffffff;
+      padding: 5px 5px 18px 5px;
+      border-radius: 6px;
+      box-shadow: 0 0 18px rgba(255, 26, 83, 0.6);
       opacity: 0;
       transform: scale(0.5);
-      animation: popAndFade 4s ease-in-out forwards;
+      animation: popAndFade 4.2s ease-in-out forwards;
+      text-align: center;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 86px;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+    }
+
+    .polaroid-caption {
+      font-family: 'Dancing Script', cursive;
+      color: #d60059;
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 3px;
+      line-height: 1.1;
     }
 
     @keyframes popAndFade {
       0% {
         opacity: 0;
-        transform: scale(0.5) rotate(-5deg);
+        transform: scale(0.5) rotate(-6deg);
       }
       18% {
-        opacity: 0.92;
+        opacity: 0.94;
         transform: scale(1) rotate(3deg);
       }
       82% {
-        opacity: 0.92;
+        opacity: 0.94;
         transform: scale(1.03) rotate(-2deg);
       }
       100% {
@@ -139,11 +169,15 @@
       z-index: 3;
     }
 
+    #fx-canvas {
+      z-index: 15;
+    }
+
     /* Heart-er bhetorer animated lekha */
     #heart-text {
       display: none;
       position: fixed;
-      top: calc(50% - 20px);
+      top: calc(50% - 22px);
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
@@ -159,25 +193,27 @@
     }
 
     .line-1 {
+      font-family: 'Dancing Script', cursive;
       color: #ffffff;
-      font-size: 21px;
+      font-size: 28px;
       font-weight: bold;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       animation: fadeSlideIn 0.9s ease forwards;
       animation-delay: 0.2s;
     }
 
     .line-2 {
       color: #ffd6e6;
-      font-size: 15px;
-      margin-bottom: 8px;
+      font-size: 14px;
+      margin-bottom: 6px;
       animation: fadeSlideIn 0.9s ease forwards;
       animation-delay: 1.1s;
     }
 
     .line-3 {
+      font-family: 'Dancing Script', cursive;
       color: #ffffff;
-      font-size: 19px;
+      font-size: 26px;
       font-weight: bold;
       animation: fadeSlideIn 0.9s ease forwards, heartBeat 1.5s ease-in-out infinite;
       animation-delay: 2.0s, 2.9s;
@@ -204,7 +240,7 @@
     #countdown-box {
       display: none;
       position: fixed;
-      bottom: 30px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -214,22 +250,76 @@
       background: rgba(255, 26, 83, 0.18);
       border: 1px solid rgba(255, 77, 136, 0.55);
       border-radius: 16px;
-      padding: 12px 16px;
+      padding: 10px 16px;
       backdrop-filter: blur(4px);
     }
 
     #countdown-title {
+      font-family: 'Dancing Script', cursive;
       color: #ffd6e6;
-      font-size: 14px;
-      margin-bottom: 6px;
+      font-size: 19px;
+      margin-bottom: 4px;
     }
 
     #timer {
       color: #ffffff;
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 18px;
+      font-weight: 600;
       letter-spacing: 1px;
       text-shadow: 0 0 8px #ff1a53;
+    }
+
+    /* Secret Love Letter Modal */
+    #letter-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      z-index: 30;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .letter-card {
+      background: linear-gradient(145deg, #2a0815, #12040a);
+      border: 1.5px solid rgba(255, 102, 153, 0.7);
+      border-radius: 20px;
+      padding: 24px 20px;
+      max-width: 340px;
+      width: 100%;
+      color: #ffe6f0;
+      text-align: center;
+      box-shadow: 0 0 28px rgba(255, 26, 83, 0.55);
+      animation: modalPop 0.35s ease;
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .letter-card h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: #ff6699;
+      margin-bottom: 12px;
+    }
+
+    .letter-card p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #ffd6e6;
+      margin-bottom: 18px;
+    }
+
+    #close-letter {
+      background: #ff3377;
+      color: white;
+      padding: 8px 24px;
+      font-size: 14px;
+      border-radius: 20px;
     }
   </style>
 </head>
@@ -243,13 +333,15 @@
     </div>
   </div>
 
-  <!-- Background Song -->
+  <!-- Background Song & Top Buttons -->
   <audio id="bg-music" src="song.mp3" loop preload="auto"></audio>
+  <button id="letter-btn">💌 Letter</button>
   <button id="music-btn">🔊</button>
 
   <canvas id="bg-canvas"></canvas>
   <div id="photo-layer"></div>
   <canvas id="heart-canvas"></canvas>
+  <canvas id="fx-canvas"></canvas>
 
   <!-- Animated Sequence Text inside Heart -->
   <div id="heart-text">
@@ -263,15 +355,35 @@
     <div id="timer">Loading...</div>
   </div>
 
+  <!-- Secret Love Letter Popup -->
+  <div id="letter-modal">
+    <div class="letter-card">
+      <h2>My Dear Baishakhi ❤️</h2>
+      <p>
+        Proti-ta din tomake khub miss kori. Dure thakleo amar sob kichu jure shudhu tumi acho.
+        Ar beshi din nei—23rd December ami bari firchi, ar khub taratari amader dekha hobe!
+        Thank you for always being mine. I love you forever, Beboo! 🥰💍
+      </p>
+      <button id="close-letter">Close ❤️</button>
+    </div>
+  </div>
+
   <script>
     const targetDate = new Date("2026-12-23T00:00:00+05:30").getTime();
-    const photos = ["1.jpg.jpg", "2.jpg.jpg", "3.jpg.jpg", "4.jpg.JPG"];
+
+    // Exact file names + Polaroid captions
+    const photos = [
+      { src: "1.jpg.jpg", caption: "My Favorite ❤️" },
+      { src: "2.jpg.jpg", caption: "Miss You 🥰" },
+      { src: "3.jpg.jpg", caption: "Always Yours 💕" },
+      { src: "4.jpg.JPG", caption: "23rd Dec Soon ✨" }
+    ];
 
     // Background-e chobi preload
     const preloadedImages = [];
-    photos.forEach(src => {
+    photos.forEach(p => {
       const img = new Image();
-      img.src = src;
+      img.src = p.src;
       preloadedImages.push(img);
     });
 
@@ -283,11 +395,19 @@
     const photoLayer = document.getElementById("photo-layer");
     const heartCanvas = document.getElementById("heart-canvas");
     const heartCtx = heartCanvas.getContext("2d");
+    const fxCanvas = document.getElementById("fx-canvas");
+    const fxCtx = fxCanvas.getContext("2d");
     const heartText = document.getElementById("heart-text");
     const countdownBox = document.getElementById("countdown-box");
     const timerEl = document.getElementById("timer");
     const bgMusic = document.getElementById("bg-music");
     const musicBtn = document.getElementById("music-btn");
+    const letterBtn = document.getElementById("letter-btn");
+    const letterModal = document.getElementById("letter-modal");
+    const closeLetter = document.getElementById("close-letter");
+
+    let started = false;
+    let particles = [];
 
     function moveNoButton(e) {
       e.preventDefault();
@@ -305,21 +425,28 @@
     noBtn.addEventListener("click", moveNoButton);
 
     yesBtn.addEventListener("click", () => {
+      started = true;
       proposalBox.style.display = "none";
-      document.body.style.background = "#000000";
+      document.body.style.background = "#050208";
       bgCanvas.style.display = "block";
       photoLayer.style.display = "block";
       heartCanvas.style.display = "block";
+      fxCanvas.style.display = "block";
       musicBtn.style.display = "block";
+      letterBtn.style.display = "block";
 
       bgMusic.play().catch(err => console.log("Audio play error:", err));
 
-      startFallingHearts();
+      startFxLayer();
+      spawnBurst(window.innerWidth / 2, window.innerHeight / 2, 55); // YES Fireworks
+      startStarsAndHearts();
       startMainHeart();
       startPopupPhotos();
     });
 
-    musicBtn.addEventListener("click", () => {
+    // Music Toggle
+    musicBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       if (bgMusic.paused) {
         bgMusic.play();
         musicBtn.innerText = "🔊";
@@ -329,39 +456,139 @@
       }
     });
 
+    // Secret Letter Modal
+    letterBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      letterModal.style.display = "flex";
+    });
+
+    closeLetter.addEventListener("click", (e) => {
+      e.stopPropagation();
+      letterModal.style.display = "none";
+    });
+
+    letterModal.addEventListener("click", (e) => {
+      if (e.target === letterModal) letterModal.style.display = "none";
+    });
+
+    // Touch / Click Sparkle & Heart Burst anywhere on screen
+    function handleTouchBurst(x, y) {
+      if (!started || letterModal.style.display === "flex") return;
+      spawnBurst(x, y, 16);
+    }
+
+    window.addEventListener("click", (e) => {
+      handleTouchBurst(e.clientX, e.clientY);
+    });
+
+    window.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 0) {
+        handleTouchBurst(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    });
+
+    function spawnBurst(x, y, count) {
+      const colors = ["#ff1a53", "#ff6699", "#ffd6e6", "#ffcc00", "#ffffff"];
+      const symbols = ["❤️", "✨", "💖", "💕"];
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 4.5 + 1.5;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+          size: Math.random() * 10 + 8,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          symbol: Math.random() > 0.45 ? symbols[Math.floor(Math.random() * symbols.length)] : null
+        });
+      }
+    }
+
+    function startFxLayer() {
+      fxCanvas.width = window.innerWidth;
+      fxCanvas.height = window.innerHeight;
+
+      function animateFx() {
+        fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.06; // slight gravity
+          p.alpha -= 0.022;
+
+          if (p.alpha <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          fxCtx.save();
+          fxCtx.globalAlpha = p.alpha;
+          if (p.symbol) {
+            fxCtx.font = `${p.size}px Arial`;
+            fxCtx.fillText(p.symbol, p.x, p.y);
+          } else {
+            fxCtx.fillStyle = p.color;
+            fxCtx.beginPath();
+            fxCtx.arc(p.x, p.y, p.size / 3.5, 0, Math.PI * 2);
+            fxCtx.fill();
+          }
+          fxCtx.restore();
+        }
+
+        requestAnimationFrame(animateFx);
+      }
+
+      animateFx();
+    }
+
     function startPopupPhotos() {
       let index = 0;
 
+      // 4-te alada kona, button ar countdown-er theke dure
       const spots = [
-        { top: "18px", left: "14px" },
-        { top: "68px", right: "14px" },
-        { bottom: "130px", left: "14px" },
-        { bottom: "130px", right: "14px" }
+        { top: "64px", left: "12px" },
+        { top: "64px", right: "12px" },
+        { bottom: "118px", left: "12px" },
+        { bottom: "118px", right: "12px" }
       ];
 
       function spawnPhoto() {
         if (photos.length === 0) return;
 
+        const item = photos[index % photos.length];
+        const card = document.createElement("div");
+        card.className = "polaroid";
+
         const img = document.createElement("img");
-        img.src = photos[index % photos.length];
-        img.className = "popup-photo";
+        img.src = item.src;
+
+        const cap = document.createElement("div");
+        cap.className = "polaroid-caption";
+        cap.innerText = item.caption;
+
+        card.appendChild(img);
+        card.appendChild(cap);
 
         const spot = spots[index % spots.length];
-        if (spot.top) img.style.top = spot.top;
-        if (spot.bottom) img.style.bottom = spot.bottom;
-        if (spot.left) img.style.left = spot.left;
-        if (spot.right) img.style.right = spot.right;
+        if (spot.top) card.style.top = spot.top;
+        if (spot.bottom) card.style.bottom = spot.bottom;
+        if (spot.left) card.style.left = spot.left;
+        if (spot.right) card.style.right = spot.right;
 
-        photoLayer.appendChild(img);
+        photoLayer.appendChild(card);
         index++;
 
         setTimeout(() => {
-          img.remove();
-        }, 4100);
+          card.remove();
+        }, 4300);
       }
 
       spawnPhoto();
-      setInterval(spawnPhoto, 1200);
+      setInterval(spawnPhoto, 1250);
     }
 
     function startCountdown() {
@@ -388,29 +615,51 @@
       setInterval(updateTimer, 1000);
     }
 
-    function startFallingHearts() {
+    // Twinkling Stars + Falling Hearts
+    function startStarsAndHearts() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
 
-      const hearts = [];
-      const heartSymbols = ["❤️", "💖", "💕", "💗"];
-      const totalHearts = 35;
-
-      for (let i = 0; i < totalHearts; i++) {
-        hearts.push({
+      const stars = [];
+      for (let i = 0; i < 65; i++) {
+        stars.push({
           x: Math.random() * bgCanvas.width,
-          y: Math.random() * bgCanvas.height - bgCanvas.height,
-          size: Math.random() * 16 + 12,
-          speed: Math.random() * 2 + 1,
-          sway: Math.random() * 1.5 - 0.75,
-          symbol: heartSymbols[Math.floor(Math.random() * heartSymbols.length)],
-          opacity: Math.random() * 0.6 + 0.4
+          y: Math.random() * bgCanvas.height,
+          r: Math.random() * 1.5 + 0.4,
+          alpha: Math.random(),
+          delta: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1)
         });
       }
 
-      function animateFall() {
+      const hearts = [];
+      const heartSymbols = ["❤️", "💖", "💕", "💗"];
+      for (let i = 0; i < 30; i++) {
+        hearts.push({
+          x: Math.random() * bgCanvas.width,
+          y: Math.random() * bgCanvas.height - bgCanvas.height,
+          size: Math.random() * 15 + 11,
+          speed: Math.random() * 1.8 + 0.9,
+          sway: Math.random() * 1.4 - 0.7,
+          symbol: heartSymbols[Math.floor(Math.random() * heartSymbols.length)],
+          opacity: Math.random() * 0.55 + 0.35
+        });
+      }
+
+      function animateBg() {
         bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
 
+        // Draw twinkling stars
+        stars.forEach(s => {
+          s.alpha += s.delta;
+          if (s.alpha <= 0.1 || s.alpha >= 1) s.delta *= -1;
+          bgCtx.globalAlpha = Math.max(0.1, Math.min(1, s.alpha));
+          bgCtx.fillStyle = "#ffffff";
+          bgCtx.beginPath();
+          bgCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          bgCtx.fill();
+        });
+
+        // Draw falling hearts
         hearts.forEach(h => {
           bgCtx.globalAlpha = h.opacity;
           bgCtx.font = `${h.size}px Arial`;
@@ -425,10 +674,10 @@
           }
         });
 
-        requestAnimationFrame(animateFall);
+        requestAnimationFrame(animateBg);
       }
 
-      animateFall();
+      animateBg();
     }
 
     function startMainHeart() {
@@ -436,7 +685,7 @@
       heartCanvas.height = window.innerHeight;
 
       const cx = heartCanvas.width / 2;
-      const cy = heartCanvas.height / 2 - 20;
+      const cy = heartCanvas.height / 2 - 22;
       const scale = Math.min(heartCanvas.width, heartCanvas.height) / 36;
       const steps = 140;
       let i = 0;
