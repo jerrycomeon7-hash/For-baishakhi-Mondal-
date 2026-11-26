@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Baishakhi ❤️</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffe6f0;
+      transition: background 0.8s ease;
+    }
+
+    #proposal-box {
+      text-align: center;
+      padding: 30px 20px;
+      z-index: 10;
+    }
+
+    h1 {
+      color: #d60059;
+      font-size: 24px;
+      margin-bottom: 40px;
+      line-height: 1.4;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    #yes-btn {
+      background: #ff3377;
+      color: white;
+    }
+
+    #no-btn {
+      background: #808080;
+      color: white;
+      position: relative;
+      transition: left 0.15s ease, top 0.15s ease;
+    }
+
+    canvas {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #bg-canvas {
+      z-index: 1;
+    }
+
+    #heart-canvas {
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="proposal-box">
+    <h1>Baishakhi, will you be mine forever? 💍❤️</h1>
+    <div class="btn-group">
+      <button id="yes-btn">YES 😍</button>
+      <button id="no-btn">NO 😒</button>
+    </div>
+  </div>
+
+  <!-- Background falling hearts -->
+  <canvas id="bg-canvas"></canvas>
+  <!-- Main glowing heart -->
+  <canvas id="heart-canvas"></canvas>
+
+  <script>
+    const gfName = "Baishakhi Mondal";
+
+    const noBtn = document.getElementById("no-btn");
+    const yesBtn = document.getElementById("yes-btn");
+    const proposalBox = document.getElementById("proposal-box");
+    const bgCanvas = document.getElementById("bg-canvas");
+    const bgCtx = bgCanvas.getContext("2d");
+    const heartCanvas = document.getElementById("heart-canvas");
+    const heartCtx = heartCanvas.getContext("2d");
+
+    // NO button paliye jawar function
+    function moveNoButton(e) {
+      e.preventDefault();
+      noBtn.style.position = "fixed";
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+      const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+      const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+    }
+
+    noBtn.addEventListener("touchstart", moveNoButton);
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+
+    // YES click korle duto animation ekshathe shuru hobe
+    yesBtn.addEventListener("click", () => {
+      proposalBox.style.display = "none";
+      document.body.style.background = "#000000";
+      bgCanvas.style.display = "block";
+      heartCanvas.style.display = "block";
+      startFallingHearts();
+      startMainHeart();
+    });
+
+    // 1. Background Falling Hearts Animation
+    function startFallingHearts() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+
+      const hearts = [];
+      const heartSymbols = ["❤️", "💖", "💕", "💗"];
+      const totalHearts = 35;
+
+      for (let i = 0; i < totalHearts; i++) {
+        hearts.push({
+          x: Math.random() * bgCanvas.width,
+          y: Math.random() * bgCanvas.height - bgCanvas.height,
+          size: Math.random() * 16 + 12,
+          speed: Math.random() * 2 + 1,
+          sway: Math.random() * 1.5 - 0.75,
+          symbol: heartSymbols[Math.floor(Math.random() * heartSymbols.length)],
+          opacity: Math.random() * 0.6 + 0.4
+        });
+      }
+
+      function animateFall() {
+        bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        hearts.forEach(h => {
+          bgCtx.globalAlpha = h.opacity;
+          bgCtx.font = `${h.size}px Arial`;
+          bgCtx.fillText(h.symbol, h.x, h.y);
+
+          h.y += h.speed;
+          h.x += h.sway;
+
+          if (h.y > bgCanvas.height + 30) {
+            h.y = -20;
+            h.x = Math.random() * bgCanvas.width;
+          }
+        });
+
+        requestAnimationFrame(animateFall);
+      }
+
+      animateFall();
+    }
+
+    // 2. Main Glowing Heart + Personalized Message
+    function startMainHeart() {
+      heartCanvas.width = window.innerWidth;
+      heartCanvas.height = window.innerHeight;
+
+      const cx = heartCanvas.width / 2;
+      const cy = heartCanvas.height / 2;
+      const scale = Math.min(canvasWidth(), canvasHeight()) / 36;
+      const steps = 140;
+      let i = 0;
+
+      function canvasWidth() { return heartCanvas.width; }
+      function canvasHeight() { return heartCanvas.height; }
+
+      heartCtx.strokeStyle = "#ff1a53";
+      heartCtx.lineWidth = 2;
+      heartCtx.shadowBlur = 12;
+      heartCtx.shadowColor = "#ff1a53";
+
+      function drawStep() {
+        if (i <= steps) {
+          const t = i * ((2 * Math.PI) / steps);
+          const x = cx + 16 * Math.pow(Math.sin(t), 3) * scale;
+          const y = cy - (
+            13 * Math.cos(t) -
+            5 * Math.cos(2 * t) -
+            2 * Math.cos(3 * t) -
+            Math.cos(4 * t)
+          ) * scale;
+
+          heartCtx.beginPath();
+          heartCtx.moveTo(cx, cy);
+          heartCtx.lineTo(x, y);
+          heartCtx.stroke();
+
+          i++;
+          requestAnimationFrame(drawStep);
+        } else {
+          heartCtx.shadowBlur = 8;
+          heartCtx.shadowColor = "#ff4d88";
+          heartCtx.textAlign = "center";
+
+          heartCtx.fillStyle = "#ffffff";
+          heartCtx.font = "bold 20px Arial";
+          heartCtx.fillText(`${gfName} ❤️`, cx, cy - 20);
+
+          heartCtx.fillStyle = "#ffd6e6";
+          heartCtx.font = "15px Arial";
+          heartCtx.fillText("We will meet very soon,", cx, cy + 8);
+
+          heartCtx.fillStyle = "#ffffff";
+          heartCtx.font = "bold 18px Arial";
+          heartCtx.fillText("I Love You, Beboo! 🥰", cx, cy + 34);
+        }
+      }
+
+      drawStep();
+    }
+  </script>
+
+</body>
+  </html>
