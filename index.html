@@ -64,6 +64,20 @@
       transition: left 0.15s ease, top 0.15s ease;
     }
 
+    #music-btn {
+      display: none;
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 20;
+      padding: 8px 14px;
+      font-size: 16px;
+      background: rgba(255, 26, 83, 0.35);
+      color: white;
+      border: 1px solid rgba(255, 77, 136, 0.7);
+      border-radius: 20px;
+    }
+
     canvas {
       display: none;
       position: fixed;
@@ -167,6 +181,10 @@
     </div>
   </div>
 
+  <!-- Background Song -->
+  <audio id="bg-music" src="song.mp3" loop preload="auto"></audio>
+  <button id="music-btn">🔊</button>
+
   <canvas id="bg-canvas"></canvas>
   <div id="photo-layer"></div>
   <canvas id="heart-canvas"></canvas>
@@ -179,8 +197,6 @@
   <script>
     const gfName = "Baishakhi Mondal";
     const targetDate = new Date("2026-12-23T00:00:00+05:30").getTime();
-
-    // Tomar upload kora exact file names
     const photos = ["1.jpg.jpg", "2.jpg.jpg", "3.jpg.jpg", "4.jpg.JPG"];
 
     const noBtn = document.getElementById("no-btn");
@@ -193,6 +209,8 @@
     const heartCtx = heartCanvas.getContext("2d");
     const countdownBox = document.getElementById("countdown-box");
     const timerEl = document.getElementById("timer");
+    const bgMusic = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
 
     function moveNoButton(e) {
       e.preventDefault();
@@ -215,8 +233,24 @@
       bgCanvas.style.display = "block";
       photoLayer.style.display = "block";
       heartCanvas.style.display = "block";
+      musicBtn.style.display = "block";
+
+      // YES click korlei gan play hobe
+      bgMusic.play().catch(err => console.log("Audio play error:", err));
+
       startFallingHearts();
       startMainHeart();
+    });
+
+    // Mute / Unmute button
+    musicBtn.addEventListener("click", () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicBtn.innerText = "🔊";
+      } else {
+        bgMusic.pause();
+        musicBtn.innerText = "🔇";
+      }
     });
 
     function startPopupPhotos() {
