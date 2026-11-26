@@ -356,10 +356,17 @@
       font-size: 15px;
       font-weight: 600;
       color: #ffffff;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    #song-status {
+      font-size: 11px;
+      color: #ff99bb;
+      height: 16px;
+      margin-bottom: 8px;
     }
 
     .progress-wrap {
@@ -463,7 +470,7 @@
   </div>
 
   <!-- Step 4: Main Heart, Photos, Playlist & Countdown -->
-  <audio id="bg-music" preload="metadata"></audio>
+  <audio id="bg-music" preload="auto"></audio>
   <button id="letter-btn">💌 Letter</button>
   <button id="music-btn">🎵 Music</button>
 
@@ -501,6 +508,7 @@
     <div class="modal-card">
       <h2>Songs For My Beboo 🎵❤️</h2>
       <div id="current-song-name">Loading...</div>
+      <div id="song-status"></div>
 
       <div class="progress-wrap">
         <input type="range" id="seek-bar" min="0" max="100" value="0">
@@ -543,6 +551,8 @@
 
     let currentTrack = 0;
     let isSeeking = false;
+    const preloaderAudio = new Audio(); // Background preloader for next song
+    preloaderAudio.preload = "auto";
 
     const startScreen = document.getElementById("start-screen");
     const openBtn = document.getElementById("open-btn");
@@ -569,6 +579,7 @@
     const musicModal = document.getElementById("music-modal");
     const closeMusic = document.getElementById("close-music");
     const currentSongName = document.getElementById("current-song-name");
+    const songStatus = document.getElementById("song-status");
     const seekBar = document.getElementById("seek-bar");
     const currentTimeEl = document.getElementById("current-time");
     const totalTimeEl = document.getElementById("total-time");
@@ -585,7 +596,17 @@
     let particles = [];
     let fxRunning = false;
 
-    // Preload photos softly after page loads
+    function getSongUrl(filename) {
+      return encodeURIComponent(filename.normalize("NFC"));
+    }
+
+    function preloadNextTrack(index) {
+      const nextIdx = (index + 1) % playlist.length;
+      preloaderAudio.src = getSongUrl(playlist[nextIdx].file);
+      preloaderAudio.load();
+    }
+
+    // Preload photos & first song as soon as page opens
     window.addEventListener("load", () => {
       photos.forEach(p => {
         const img = new Image();
@@ -619,7 +640,14 @@
     function loadTrack(index, autoPlay) {
       currentTrack = (index + playlist.length) % playlist.length;
       const track = playlist[currentTrack];
-      bgMusic.src = encodeURI(track.file);
+      const url = getSongUrl(track.file);
+
+      if (bgMusic.getAttribute("data-src") !== url) {
+        bgMusic.setAttribute("data-src", url);
+        bgMusic.src = url;
+        bgMusic.load();
+      }
+
       currentSongName.innerText = track.title;
       seekBar.value = 0;
       currentTimeEl.innerText = "0:00";
@@ -627,12 +655,32 @@
       renderPlaylist();
 
       if (autoPlay) {
+        songStatus.innerText = "Loading song... ⏳";
         bgMusic.play().then(() => {
+          songStatus.innerText = "";
           playPauseBtn.innerText = "⏸️";
           musicBtn.innerText = "🎵 Playing";
-        }).catch(err => console.log("Audio play error:", err));
+          preloadNextTrack(currentTrack);
+        }).catch(() => {
+          songStatus.innerText = "Tap ▶️ to play";
+        });
       }
     }
+
+    bgMusic.addEventListener("waiting", () => {
+      songStatus.innerText = "Buffering... ⏳";
+    });
+
+    bgMusic.addEventListener("playing", () => {
+      songStatus.innerText = "";
+      playPauseBtn.innerText = "⏸️";
+      musicBtn.innerText = "🎵 Playing";
+    });
+
+    bgMusic.addEventListener("error", () => {
+      songStatus.innerText = "File load error — skipping...";
+      setTimeout(() => loadTrack(currentTrack + 1, true), 1500);
+    });
 
     bgMusic.addEventListener("loadedmetadata", () => {
       totalTimeEl.innerText = formatTime(bgMusic.duration);
@@ -649,7 +697,6 @@
       loadTrack(currentTrack + 1, true);
     });
 
-    // Seekbar drag/tap to jump forward or backward
     seekBar.addEventListener("input", () => {
       isSeeking = true;
       if (bgMusic.duration) {
@@ -788,7 +835,6 @@
       }
     }, { passive: true });
 
-    // Optimized FX burst: only runs animation loop while particles exist
     function spawnBurst(x, y, count) {
       const colors = ["#ff1a53", "#ff6699", "#ffd6e6", "#ffcc00", "#ffffff"];
       for (let i = 0; i < count; i++) {
@@ -905,7 +951,6 @@
       setInterval(updateTimer, 1000);
     }
 
-    // Lightweight Stars + Falling Hearts (smooth 60fps on mobile)
     function startStarsAndHearts() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
