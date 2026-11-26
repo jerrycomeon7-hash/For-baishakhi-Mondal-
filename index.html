@@ -22,7 +22,7 @@
       justify-content: center;
       align-items: center;
       background: #14050c;
-      transition: background 0.8s ease;
+      transition: background 0.6s ease;
     }
 
     /* 1. Start Surprise Screen */
@@ -37,7 +37,6 @@
       color: #ff6699;
       font-size: 36px;
       margin-bottom: 10px;
-      text-shadow: 0 0 12px rgba(255, 26, 83, 0.6);
     }
 
     #start-screen p {
@@ -55,8 +54,9 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 26, 83, 0.65);
+      box-shadow: 0 4px 16px rgba(255, 26, 83, 0.5);
       animation: pulseBtn 1.6s ease-in-out infinite;
+      will-change: transform;
     }
 
     @keyframes pulseBtn {
@@ -88,11 +88,10 @@
       z-index: 26;
       padding: 6px 14px;
       font-size: 13px;
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(30, 30, 30, 0.75);
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 20px;
-      backdrop-filter: blur(4px);
     }
 
     /* 3. Proposal YES/NO Screen */
@@ -124,12 +123,12 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
     }
 
     #yes-btn {
       background: #ff3377;
       color: white;
+      box-shadow: 0 4px 12px rgba(255, 51, 119, 0.35);
     }
 
     #no-btn {
@@ -146,12 +145,11 @@
       top: 14px;
       z-index: 20;
       padding: 7px 14px;
-      font-size: 14px;
-      background: rgba(255, 26, 83, 0.35);
+      font-size: 13px;
+      background: rgba(45, 10, 24, 0.85);
       color: white;
-      border: 1px solid rgba(255, 102, 153, 0.75);
+      border: 1px solid rgba(255, 102, 153, 0.7);
       border-radius: 20px;
-      backdrop-filter: blur(4px);
     }
 
     #music-btn { right: 14px; }
@@ -182,20 +180,21 @@
 
     .polaroid {
       position: absolute;
-      width: 104px;
+      width: 100px;
       background: #ffffff;
-      padding: 5px 5px 18px 5px;
+      padding: 5px 5px 16px 5px;
       border-radius: 6px;
-      box-shadow: 0 0 18px rgba(255, 26, 83, 0.6);
+      box-shadow: 0 4px 14px rgba(255, 26, 83, 0.45);
       opacity: 0;
       transform: scale(0.5);
       animation: popAndFade 4.2s ease-in-out forwards;
       text-align: center;
+      will-change: transform, opacity;
     }
 
     .polaroid img {
       width: 100%;
-      height: 86px;
+      height: 82px;
       object-fit: cover;
       border-radius: 3px;
       display: block;
@@ -211,10 +210,10 @@
     }
 
     @keyframes popAndFade {
-      0% { opacity: 0; transform: scale(0.5) rotate(-6deg); }
+      0% { opacity: 0; transform: scale(0.6) rotate(-5deg); }
       18% { opacity: 0.94; transform: scale(1) rotate(3deg); }
-      82% { opacity: 0.94; transform: scale(1.03) rotate(-2deg); }
-      100% { opacity: 0; transform: scale(0.7) rotate(4deg); }
+      82% { opacity: 0.94; transform: scale(1.02) rotate(-2deg); }
+      100% { opacity: 0; transform: scale(0.75) rotate(4deg); }
     }
 
     #heart-canvas { z-index: 3; }
@@ -235,7 +234,8 @@
     .text-line {
       opacity: 0;
       transform: translateY(14px);
-      text-shadow: 0 0 10px #ff1a53, 0 0 18px #ff4d88;
+      text-shadow: 0 0 10px #ff1a53;
+      will-change: transform, opacity;
     }
 
     .line-1 {
@@ -244,7 +244,7 @@
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 6px;
-      animation: fadeSlideIn 0.9s ease forwards;
+      animation: fadeSlideIn 0.8s ease forwards;
       animation-delay: 0.2s;
     }
 
@@ -252,8 +252,8 @@
       color: #ffd6e6;
       font-size: 14px;
       margin-bottom: 6px;
-      animation: fadeSlideIn 0.9s ease forwards;
-      animation-delay: 1.1s;
+      animation: fadeSlideIn 0.8s ease forwards;
+      animation-delay: 1.0s;
     }
 
     .line-3 {
@@ -261,8 +261,8 @@
       color: #ffffff;
       font-size: 26px;
       font-weight: bold;
-      animation: fadeSlideIn 0.9s ease forwards, heartBeat 1.5s ease-in-out infinite;
-      animation-delay: 2.0s, 2.9s;
+      animation: fadeSlideIn 0.8s ease forwards, heartBeat 1.5s ease-in-out infinite;
+      animation-delay: 1.8s, 2.6s;
     }
 
     @keyframes fadeSlideIn {
@@ -270,31 +270,24 @@
     }
 
     @keyframes heartBeat {
-      0%, 100% {
-        transform: scale(1);
-        text-shadow: 0 0 10px #ff1a53, 0 0 18px #ff4d88;
-      }
-      50% {
-        transform: scale(1.09);
-        text-shadow: 0 0 16px #ff1a53, 0 0 28px #ff6699;
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
     }
 
     #countdown-box {
       display: none;
       position: fixed;
-      bottom: 24px;
+      bottom: 22px;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
       max-width: 360px;
       text-align: center;
       z-index: 5;
-      background: rgba(255, 26, 83, 0.18);
+      background: rgba(38, 8, 20, 0.82);
       border: 1px solid rgba(255, 77, 136, 0.55);
       border-radius: 16px;
       padding: 10px 16px;
-      backdrop-filter: blur(4px);
     }
 
     #countdown-title {
@@ -309,44 +302,37 @@
       font-size: 18px;
       font-weight: 600;
       letter-spacing: 1px;
-      text-shadow: 0 0 8px #ff1a53;
     }
 
-    #letter-modal {
+    /* Shared Modal Overlay */
+    .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.78);
+      background: rgba(0, 0, 0, 0.82);
       z-index: 30;
       justify-content: center;
       align-items: center;
-      padding: 20px;
-      backdrop-filter: blur(4px);
+      padding: 18px;
     }
 
-    .letter-card {
+    .modal-card {
       background: linear-gradient(145deg, #2a0815, #12040a);
       border: 1.5px solid rgba(255, 102, 153, 0.7);
       border-radius: 20px;
-      padding: 24px 20px;
+      padding: 22px 18px;
       max-width: 340px;
       width: 100%;
       color: #ffe6f0;
       text-align: center;
-      box-shadow: 0 0 28px rgba(255, 26, 83, 0.55);
-      animation: modalPop 0.35s ease;
+      box-shadow: 0 8px 28px rgba(255, 26, 83, 0.4);
     }
 
-    @keyframes modalPop {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .letter-card h2 {
+    .modal-card h2 {
       font-family: 'Dancing Script', cursive;
-      font-size: 28px;
+      font-size: 27px;
       color: #ff6699;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .letter-card p {
@@ -356,12 +342,99 @@
       margin-bottom: 18px;
     }
 
-    #close-letter {
+    .close-btn {
       background: #ff3377;
       color: white;
       padding: 8px 24px;
       font-size: 14px;
       border-radius: 20px;
+      margin-top: 12px;
+    }
+
+    /* Phone-Style Music Player */
+    #current-song-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      margin-bottom: 6px;
+    }
+
+    #seek-bar {
+      width: 100%;
+      accent-color: #ff3377;
+      cursor: pointer;
+      height: 5px;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #ffb3cc;
+      margin-bottom: 14px;
+    }
+
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .ctrl-btn {
+      background: rgba(255, 51, 119, 0.22);
+      color: #ffffff;
+      border: 1px solid rgba(255, 102, 153, 0.55);
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 50%;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #play-pause-btn {
+      background: #ff3377;
+      width: 54px;
+      height: 54px;
+      font-size: 21px;
+    }
+
+    #playlist-items {
+      max-height: 165px;
+      overflow-y: auto;
+      text-align: left;
+      border-top: 1px solid rgba(255, 102, 153, 0.25);
+      padding-top: 8px;
+    }
+
+    .song-item {
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 10px;
+      color: #ffd6e6;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .song-item.active {
+      background: rgba(255, 51, 119, 0.35);
+      color: #ffffff;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -376,7 +449,7 @@
 
   <!-- Step 2: Proposal Video -->
   <div id="video-screen">
-    <video id="intro-video" src="VID-20261126-WA0003.mp4" playsinline preload="auto"></video>
+    <video id="intro-video" src="VID-20261126-WA0003.mp4" playsinline preload="metadata"></video>
     <button id="skip-btn">Skip ⏭️</button>
   </div>
 
@@ -389,10 +462,10 @@
     </div>
   </div>
 
-  <!-- Step 4: Main Heart, Photos, Song & Countdown -->
-  <audio id="bg-music" src="song.mp3" loop preload="auto"></audio>
+  <!-- Step 4: Main Heart, Photos, Playlist & Countdown -->
+  <audio id="bg-music" preload="metadata"></audio>
   <button id="letter-btn">💌 Letter</button>
-  <button id="music-btn">🔊</button>
+  <button id="music-btn">🎵 Music</button>
 
   <canvas id="bg-canvas"></canvas>
   <div id="photo-layer"></div>
@@ -410,15 +483,41 @@
     <div id="timer">Loading...</div>
   </div>
 
-  <div id="letter-modal">
-    <div class="letter-card">
+  <!-- Secret Love Letter Modal -->
+  <div id="letter-modal" class="modal-overlay">
+    <div class="modal-card letter-card">
       <h2>My Dear Baishakhi ❤️</h2>
       <p>
         Proti-ta din tomake khub miss kori. Dure thakleo amar sob kichu jure shudhu tumi acho.
         Ar beshi din nei—23rd December ami bari firchi, ar khub taratari amader dekha hobe!
         Thank you for always being mine. I love you forever, Beboo! 🥰💍
       </p>
-      <button id="close-letter">Close ❤️</button>
+      <button id="close-letter" class="close-btn">Close ❤️</button>
+    </div>
+  </div>
+
+  <!-- Phone-Style Music Player Modal -->
+  <div id="music-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h2>Songs For My Beboo 🎵❤️</h2>
+      <div id="current-song-name">Loading...</div>
+
+      <div class="progress-wrap">
+        <input type="range" id="seek-bar" min="0" max="100" value="0">
+      </div>
+      <div class="time-row">
+        <span id="current-time">0:00</span>
+        <span id="total-time">0:00</span>
+      </div>
+
+      <div class="player-controls">
+        <button id="prev-btn" class="ctrl-btn">⏮️</button>
+        <button id="play-pause-btn" class="ctrl-btn">⏸️</button>
+        <button id="next-btn" class="ctrl-btn">⏭️</button>
+      </div>
+
+      <div id="playlist-items"></div>
+      <button id="close-music" class="close-btn">Hide Player</button>
     </div>
   </div>
 
@@ -432,13 +531,18 @@
       { src: "4.jpg.JPG", caption: "23rd Dec Soon ✨" }
     ];
 
-    // Background-e chobi preload
-    const preloadedImages = [];
-    photos.forEach(p => {
-      const img = new Image();
-      img.src = p.src;
-      preloadedImages.push(img);
-    });
+    // Exact uploaded song filenames
+    const playlist = [
+      { title: "Tum Hi Ho ❤️", file: "Tum Hi Ho .mp3" },
+      { title: "Bhalobasar Morshum 💕", file: "ভালবাসার মরশুম .mp3" },
+      { title: "Aaj Phir ✨", file: "Aaj Phir .mp3" },
+      { title: "Ladki Badi Anjani Hai 🥰", file: "Ladki Badi Anjani Hai .mp3" },
+      { title: "Tera Chehra 💖", file: "Tera Chehra .mp3" },
+      { title: "Our Special Song 🎵", file: "song.mp3" }
+    ];
+
+    let currentTrack = 0;
+    let isSeeking = false;
 
     const startScreen = document.getElementById("start-screen");
     const openBtn = document.getElementById("open-btn");
@@ -459,23 +563,150 @@
     const heartText = document.getElementById("heart-text");
     const countdownBox = document.getElementById("countdown-box");
     const timerEl = document.getElementById("timer");
+
     const bgMusic = document.getElementById("bg-music");
     const musicBtn = document.getElementById("music-btn");
+    const musicModal = document.getElementById("music-modal");
+    const closeMusic = document.getElementById("close-music");
+    const currentSongName = document.getElementById("current-song-name");
+    const seekBar = document.getElementById("seek-bar");
+    const currentTimeEl = document.getElementById("current-time");
+    const totalTimeEl = document.getElementById("total-time");
+    const prevBtn = document.getElementById("prev-btn");
+    const playPauseBtn = document.getElementById("play-pause-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const playlistItemsEl = document.getElementById("playlist-items");
+
     const letterBtn = document.getElementById("letter-btn");
     const letterModal = document.getElementById("letter-modal");
     const closeLetter = document.getElementById("close-letter");
 
     let started = false;
     let particles = [];
+    let fxRunning = false;
+
+    // Preload photos softly after page loads
+    window.addEventListener("load", () => {
+      photos.forEach(p => {
+        const img = new Image();
+        img.src = p.src;
+      });
+      renderPlaylist();
+      loadTrack(0, false);
+    });
+
+    function formatTime(sec) {
+      if (isNaN(sec) || !isFinite(sec)) return "0:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? "0" : ""}${s}`;
+    }
+
+    function renderPlaylist() {
+      playlistItemsEl.innerHTML = "";
+      playlist.forEach((song, idx) => {
+        const row = document.createElement("div");
+        row.className = "song-item" + (idx === currentTrack ? " active" : "");
+        row.innerHTML = `<span>${idx + 1}. ${song.title}</span><span>${idx === currentTrack ? "🎵" : ""}</span>`;
+        row.addEventListener("click", (e) => {
+          e.stopPropagation();
+          loadTrack(idx, true);
+        });
+        playlistItemsEl.appendChild(row);
+      });
+    }
+
+    function loadTrack(index, autoPlay) {
+      currentTrack = (index + playlist.length) % playlist.length;
+      const track = playlist[currentTrack];
+      bgMusic.src = encodeURI(track.file);
+      currentSongName.innerText = track.title;
+      seekBar.value = 0;
+      currentTimeEl.innerText = "0:00";
+      totalTimeEl.innerText = "0:00";
+      renderPlaylist();
+
+      if (autoPlay) {
+        bgMusic.play().then(() => {
+          playPauseBtn.innerText = "⏸️";
+          musicBtn.innerText = "🎵 Playing";
+        }).catch(err => console.log("Audio play error:", err));
+      }
+    }
+
+    bgMusic.addEventListener("loadedmetadata", () => {
+      totalTimeEl.innerText = formatTime(bgMusic.duration);
+    });
+
+    bgMusic.addEventListener("timeupdate", () => {
+      if (!isSeeking && bgMusic.duration) {
+        seekBar.value = (bgMusic.currentTime / bgMusic.duration) * 100;
+        currentTimeEl.innerText = formatTime(bgMusic.currentTime);
+      }
+    });
+
+    bgMusic.addEventListener("ended", () => {
+      loadTrack(currentTrack + 1, true);
+    });
+
+    // Seekbar drag/tap to jump forward or backward
+    seekBar.addEventListener("input", () => {
+      isSeeking = true;
+      if (bgMusic.duration) {
+        const target = (seekBar.value / 100) * bgMusic.duration;
+        currentTimeEl.innerText = formatTime(target);
+      }
+    });
+
+    seekBar.addEventListener("change", () => {
+      if (bgMusic.duration) {
+        bgMusic.currentTime = (seekBar.value / 100) * bgMusic.duration;
+      }
+      isSeeking = false;
+    });
+
+    playPauseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (bgMusic.paused) {
+        bgMusic.play();
+        playPauseBtn.innerText = "⏸️";
+        musicBtn.innerText = "🎵 Playing";
+      } else {
+        bgMusic.pause();
+        playPauseBtn.innerText = "▶️";
+        musicBtn.innerText = "🔇 Paused";
+      }
+    });
+
+    prevBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      loadTrack(currentTrack - 1, true);
+    });
+
+    nextBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      loadTrack(currentTrack + 1, true);
+    });
+
+    musicBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      musicModal.style.display = "flex";
+    });
+
+    closeMusic.addEventListener("click", (e) => {
+      e.stopPropagation();
+      musicModal.style.display = "none";
+    });
+
+    musicModal.addEventListener("click", (e) => {
+      if (e.target === musicModal) musicModal.style.display = "none";
+    });
 
     // Open Surprise -> Play Video with sound
     openBtn.addEventListener("click", () => {
       startScreen.style.display = "none";
       videoScreen.style.display = "flex";
-      introVideo.play().catch(err => {
-        console.log("Video play error:", err);
-        showProposalScreen();
-      });
+      introVideo.play().catch(() => showProposalScreen());
     });
 
     function showProposalScreen() {
@@ -485,7 +716,6 @@
       proposalBox.style.display = "block";
     }
 
-    // Video shesh holei YES/NO screen ashbe
     introVideo.addEventListener("ended", showProposalScreen);
     skipBtn.addEventListener("click", showProposalScreen);
 
@@ -515,24 +745,14 @@
       musicBtn.style.display = "block";
       letterBtn.style.display = "block";
 
-      bgMusic.play().catch(err => console.log("Audio play error:", err));
+      fxCanvas.width = window.innerWidth;
+      fxCanvas.height = window.innerHeight;
 
-      startFxLayer();
-      spawnBurst(window.innerWidth / 2, window.innerHeight / 2, 55);
+      loadTrack(0, true);
+      spawnBurst(window.innerWidth / 2, window.innerHeight / 2, 36);
       startStarsAndHearts();
       startMainHeart();
       startPopupPhotos();
-    });
-
-    musicBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (bgMusic.paused) {
-        bgMusic.play();
-        musicBtn.innerText = "🔊";
-      } else {
-        bgMusic.pause();
-        musicBtn.innerText = "🔇";
-      }
     });
 
     letterBtn.addEventListener("click", (e) => {
@@ -549,9 +769,13 @@
       if (e.target === letterModal) letterModal.style.display = "none";
     });
 
+    function isAnyModalOpen() {
+      return letterModal.style.display === "flex" || musicModal.style.display === "flex";
+    }
+
     function handleTouchBurst(x, y) {
-      if (!started || letterModal.style.display === "flex") return;
-      spawnBurst(x, y, 16);
+      if (!started || isAnyModalOpen()) return;
+      spawnBurst(x, y, 12);
     }
 
     window.addEventListener("click", (e) => {
@@ -562,77 +786,70 @@
       if (e.touches.length > 0) {
         handleTouchBurst(e.touches[0].clientX, e.touches[0].clientY);
       }
-    });
+    }, { passive: true });
 
+    // Optimized FX burst: only runs animation loop while particles exist
     function spawnBurst(x, y, count) {
       const colors = ["#ff1a53", "#ff6699", "#ffd6e6", "#ffcc00", "#ffffff"];
-      const symbols = ["❤️", "✨", "💖", "💕"];
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 4.5 + 1.5;
+        const speed = Math.random() * 4 + 1.5;
         particles.push({
           x, y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           alpha: 1,
-          size: Math.random() * 10 + 8,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          symbol: Math.random() > 0.45 ? symbols[Math.floor(Math.random() * symbols.length)] : null
+          size: Math.random() * 4 + 2.5,
+          color: colors[Math.floor(Math.random() * colors.length)]
         });
+      }
+      if (!fxRunning) {
+        fxRunning = true;
+        requestAnimationFrame(animateFx);
       }
     }
 
-    function startFxLayer() {
-      fxCanvas.width = window.innerWidth;
-      fxCanvas.height = window.innerHeight;
+    function animateFx() {
+      fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
 
-      function animateFx() {
-        fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.07;
+        p.alpha -= 0.028;
 
-        for (let i = particles.length - 1; i >= 0; i--) {
-          const p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.06;
-          p.alpha -= 0.022;
-
-          if (p.alpha <= 0) {
-            particles.splice(i, 1);
-            continue;
-          }
-
-          fxCtx.save();
-          fxCtx.globalAlpha = p.alpha;
-          if (p.symbol) {
-            fxCtx.font = `${p.size}px Arial`;
-            fxCtx.fillText(p.symbol, p.x, p.y);
-          } else {
-            fxCtx.fillStyle = p.color;
-            fxCtx.beginPath();
-            fxCtx.arc(p.x, p.y, p.size / 3.5, 0, Math.PI * 2);
-            fxCtx.fill();
-          }
-          fxCtx.restore();
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+          continue;
         }
 
-        requestAnimationFrame(animateFx);
+        fxCtx.globalAlpha = p.alpha;
+        fxCtx.fillStyle = p.color;
+        fxCtx.beginPath();
+        fxCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        fxCtx.fill();
       }
 
-      animateFx();
+      if (particles.length > 0) {
+        requestAnimationFrame(animateFx);
+      } else {
+        fxRunning = false;
+        fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+      }
     }
 
     function startPopupPhotos() {
       let index = 0;
-
       const spots = [
-        { top: "64px", left: "12px" },
-        { top: "64px", right: "12px" },
-        { bottom: "118px", left: "12px" },
-        { bottom: "118px", right: "12px" }
+        { top: "62px", left: "12px" },
+        { top: "62px", right: "12px" },
+        { bottom: "114px", left: "12px" },
+        { bottom: "114px", right: "12px" }
       ];
 
       function spawnPhoto() {
-        if (photos.length === 0) return;
+        if (photos.length === 0 || isAnyModalOpen()) return;
 
         const item = photos[index % photos.length];
         const card = document.createElement("div");
@@ -657,13 +874,11 @@
         photoLayer.appendChild(card);
         index++;
 
-        setTimeout(() => {
-          card.remove();
-        }, 4300);
+        setTimeout(() => card.remove(), 4300);
       }
 
       spawnPhoto();
-      setInterval(spawnPhoto, 1250);
+      setInterval(spawnPhoto, 1400);
     }
 
     function startCountdown() {
@@ -690,61 +905,68 @@
       setInterval(updateTimer, 1000);
     }
 
+    // Lightweight Stars + Falling Hearts (smooth 60fps on mobile)
     function startStarsAndHearts() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
 
       const stars = [];
-      for (let i = 0; i < 65; i++) {
+      for (let i = 0; i < 42; i++) {
         stars.push({
           x: Math.random() * bgCanvas.width,
           y: Math.random() * bgCanvas.height,
-          r: Math.random() * 1.5 + 0.4,
+          r: Math.random() * 1.4 + 0.4,
           alpha: Math.random(),
-          delta: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1)
+          delta: (Math.random() * 0.015 + 0.006) * (Math.random() > 0.5 ? 1 : -1)
         });
       }
 
       const hearts = [];
-      const heartSymbols = ["❤️", "💖", "💕", "💗"];
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 16; i++) {
         hearts.push({
           x: Math.random() * bgCanvas.width,
           y: Math.random() * bgCanvas.height - bgCanvas.height,
-          size: Math.random() * 15 + 11,
-          speed: Math.random() * 1.8 + 0.9,
-          sway: Math.random() * 1.4 - 0.7,
-          symbol: heartSymbols[Math.floor(Math.random() * heartSymbols.length)],
-          opacity: Math.random() * 0.55 + 0.35
+          size: Math.random() * 6 + 6,
+          speed: Math.random() * 1.4 + 0.8,
+          sway: Math.random() * 0.8 - 0.4,
+          opacity: Math.random() * 0.5 + 0.35
         });
+      }
+
+      function drawSmallHeart(ctx, x, y, size) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.bezierCurveTo(x - size, y - size, x - size * 1.6, y + size / 2, x, y + size * 1.4);
+        ctx.bezierCurveTo(x + size * 1.6, y + size / 2, x + size, y - size, x, y);
+        ctx.fill();
       }
 
       function animateBg() {
         bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
 
-        stars.forEach(s => {
+        bgCtx.fillStyle = "#ffffff";
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
           s.alpha += s.delta;
-          if (s.alpha <= 0.1 || s.alpha >= 1) s.delta *= -1;
-          bgCtx.globalAlpha = Math.max(0.1, Math.min(1, s.alpha));
-          bgCtx.fillStyle = "#ffffff";
-          bgCtx.beginPath();
-          bgCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          bgCtx.fill();
-        });
+          if (s.alpha <= 0.15 || s.alpha >= 1) s.delta *= -1;
+          bgCtx.globalAlpha = s.alpha;
+          bgCtx.fillRect(s.x, s.y, s.r * 2, s.r * 2);
+        }
 
-        hearts.forEach(h => {
+        bgCtx.fillStyle = "#ff3377";
+        for (let i = 0; i < hearts.length; i++) {
+          const h = hearts[i];
           bgCtx.globalAlpha = h.opacity;
-          bgCtx.font = `${h.size}px Arial`;
-          bgCtx.fillText(h.symbol, h.x, h.y);
+          drawSmallHeart(bgCtx, h.x, h.y, h.size);
 
           h.y += h.speed;
           h.x += h.sway;
 
-          if (h.y > bgCanvas.height + 30) {
+          if (h.y > bgCanvas.height + 20) {
             h.y = -20;
             h.x = Math.random() * bgCanvas.width;
           }
-        });
+        }
 
         requestAnimationFrame(animateBg);
       }
@@ -759,13 +981,11 @@
       const cx = heartCanvas.width / 2;
       const cy = heartCanvas.height / 2 - 22;
       const scale = Math.min(heartCanvas.width, heartCanvas.height) / 36;
-      const steps = 140;
+      const steps = 120;
       let i = 0;
 
       heartCtx.strokeStyle = "#ff1a53";
       heartCtx.lineWidth = 2;
-      heartCtx.shadowBlur = 12;
-      heartCtx.shadowColor = "#ff1a53";
 
       function drawStep() {
         if (i <= steps) {
