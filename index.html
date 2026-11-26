@@ -80,6 +80,37 @@
     #heart-canvas {
       z-index: 2;
     }
+
+    #countdown-box {
+      display: none;
+      position: fixed;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+      z-index: 5;
+      background: rgba(255, 26, 83, 0.15);
+      border: 1px solid rgba(255, 77, 136, 0.5);
+      border-radius: 16px;
+      padding: 12px 16px;
+      backdrop-filter: blur(4px);
+    }
+
+    #countdown-title {
+      color: #ffd6e6;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    #timer {
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #ff1a53;
+    }
   </style>
 </head>
 <body>
@@ -92,13 +123,18 @@
     </div>
   </div>
 
-  <!-- Background falling hearts -->
   <canvas id="bg-canvas"></canvas>
-  <!-- Main glowing heart -->
   <canvas id="heart-canvas"></canvas>
+
+  <div id="countdown-box">
+    <div id="countdown-title">Counting down to 23rd December ❤️</div>
+    <div id="timer">Loading...</div>
+  </div>
 
   <script>
     const gfName = "Baishakhi Mondal";
+    // Target Date: 23 December 2026 (Indian Standard Time)
+    const targetDate = new Date("2026-12-23T00:00:00+05:30").getTime();
 
     const noBtn = document.getElementById("no-btn");
     const yesBtn = document.getElementById("yes-btn");
@@ -107,8 +143,9 @@
     const bgCtx = bgCanvas.getContext("2d");
     const heartCanvas = document.getElementById("heart-canvas");
     const heartCtx = heartCanvas.getContext("2d");
+    const countdownBox = document.getElementById("countdown-box");
+    const timerEl = document.getElementById("timer");
 
-    // NO button paliye jawar function
     function moveNoButton(e) {
       e.preventDefault();
       noBtn.style.position = "fixed";
@@ -124,7 +161,6 @@
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("click", moveNoButton);
 
-    // YES click korle duto animation ekshathe shuru hobe
     yesBtn.addEventListener("click", () => {
       proposalBox.style.display = "none";
       document.body.style.background = "#000000";
@@ -134,7 +170,30 @@
       startMainHeart();
     });
 
-    // 1. Background Falling Hearts Animation
+    function startCountdown() {
+      countdownBox.style.display = "block";
+
+      function updateTimer() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          timerEl.innerText = "Finally Meeting Today! 🥰❤️";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        timerEl.innerText = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
     function startFallingHearts() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
@@ -178,19 +237,15 @@
       animateFall();
     }
 
-    // 2. Main Glowing Heart + Personalized Message
     function startMainHeart() {
       heartCanvas.width = window.innerWidth;
       heartCanvas.height = window.innerHeight;
 
       const cx = heartCanvas.width / 2;
-      const cy = heartCanvas.height / 2;
-      const scale = Math.min(canvasWidth(), canvasHeight()) / 36;
+      const cy = heartCanvas.height / 2 - 30; // Ektu upore jeno countdown-er jayga thake
+      const scale = Math.min(heartCanvas.width, heartCanvas.height) / 36;
       const steps = 140;
       let i = 0;
-
-      function canvasWidth() { return heartCanvas.width; }
-      function canvasHeight() { return heartCanvas.height; }
 
       heartCtx.strokeStyle = "#ff1a53";
       heartCtx.lineWidth = 2;
@@ -231,6 +286,8 @@
           heartCtx.fillStyle = "#ffffff";
           heartCtx.font = "bold 18px Arial";
           heartCtx.fillText("I Love You, Beboo! 🥰", cx, cy + 34);
+
+          startCountdown();
         }
       }
 
