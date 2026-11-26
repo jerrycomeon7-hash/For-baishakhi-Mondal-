@@ -21,11 +21,83 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #ffe6f0;
+      background: #14050c;
       transition: background 0.8s ease;
     }
 
+    /* 1. Start Surprise Screen */
+    #start-screen {
+      text-align: center;
+      padding: 30px 20px;
+      z-index: 25;
+    }
+
+    #start-screen h2 {
+      font-family: 'Dancing Script', cursive;
+      color: #ff6699;
+      font-size: 36px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px rgba(255, 26, 83, 0.6);
+    }
+
+    #start-screen p {
+      color: #ffd6e6;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    #open-btn {
+      background: linear-gradient(135deg, #ff1a53, #ff4d88);
+      color: white;
+      padding: 14px 32px;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 26, 83, 0.65);
+      animation: pulseBtn 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    /* 2. Video Screen */
+    #video-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      z-index: 24;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #intro-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #skip-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 26;
+      padding: 6px 14px;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* 3. Proposal YES/NO Screen */
     #proposal-box {
+      display: none;
       text-align: center;
       padding: 30px 20px;
       z-index: 10;
@@ -82,13 +154,8 @@
       backdrop-filter: blur(4px);
     }
 
-    #music-btn {
-      right: 14px;
-    }
-
-    #letter-btn {
-      left: 14px;
-    }
+    #music-btn { right: 14px; }
+    #letter-btn { left: 14px; }
 
     canvas {
       display: none;
@@ -100,9 +167,7 @@
       pointer-events: none;
     }
 
-    #bg-canvas {
-      z-index: 1;
-    }
+    #bg-canvas { z-index: 1; }
 
     #photo-layer {
       display: none;
@@ -115,7 +180,6 @@
       pointer-events: none;
     }
 
-    /* Polaroid Photo Frame */
     .polaroid {
       position: absolute;
       width: 104px;
@@ -147,33 +211,15 @@
     }
 
     @keyframes popAndFade {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(-6deg);
-      }
-      18% {
-        opacity: 0.94;
-        transform: scale(1) rotate(3deg);
-      }
-      82% {
-        opacity: 0.94;
-        transform: scale(1.03) rotate(-2deg);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(0.7) rotate(4deg);
-      }
+      0% { opacity: 0; transform: scale(0.5) rotate(-6deg); }
+      18% { opacity: 0.94; transform: scale(1) rotate(3deg); }
+      82% { opacity: 0.94; transform: scale(1.03) rotate(-2deg); }
+      100% { opacity: 0; transform: scale(0.7) rotate(4deg); }
     }
 
-    #heart-canvas {
-      z-index: 3;
-    }
+    #heart-canvas { z-index: 3; }
+    #fx-canvas { z-index: 15; }
 
-    #fx-canvas {
-      z-index: 15;
-    }
-
-    /* Heart-er bhetorer animated lekha */
     #heart-text {
       display: none;
       position: fixed;
@@ -220,10 +266,7 @@
     }
 
     @keyframes fadeSlideIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes heartBeat {
@@ -269,7 +312,6 @@
       text-shadow: 0 0 8px #ff1a53;
     }
 
-    /* Secret Love Letter Modal */
     #letter-modal {
       display: none;
       position: fixed;
@@ -325,6 +367,20 @@
 </head>
 <body>
 
+  <!-- Step 1: Surprise Intro -->
+  <div id="start-screen">
+    <h2>Hey Baishakhi ❤️</h2>
+    <p>I made something special for you...</p>
+    <button id="open-btn">Open Surprise 🎁</button>
+  </div>
+
+  <!-- Step 2: Proposal Video -->
+  <div id="video-screen">
+    <video id="intro-video" src="VID-20261126-WA0003.mp4" playsinline preload="auto"></video>
+    <button id="skip-btn">Skip ⏭️</button>
+  </div>
+
+  <!-- Step 3: YES / NO Screen -->
   <div id="proposal-box">
     <h1>Baishakhi, will you be mine forever? 💍❤️</h1>
     <div class="btn-group">
@@ -333,7 +389,7 @@
     </div>
   </div>
 
-  <!-- Background Song & Top Buttons -->
+  <!-- Step 4: Main Heart, Photos, Song & Countdown -->
   <audio id="bg-music" src="song.mp3" loop preload="auto"></audio>
   <button id="letter-btn">💌 Letter</button>
   <button id="music-btn">🔊</button>
@@ -343,7 +399,6 @@
   <canvas id="heart-canvas"></canvas>
   <canvas id="fx-canvas"></canvas>
 
-  <!-- Animated Sequence Text inside Heart -->
   <div id="heart-text">
     <div class="text-line line-1">Baishakhi Mondal ❤️</div>
     <div class="text-line line-2">We will meet very soon,</div>
@@ -355,7 +410,6 @@
     <div id="timer">Loading...</div>
   </div>
 
-  <!-- Secret Love Letter Popup -->
   <div id="letter-modal">
     <div class="letter-card">
       <h2>My Dear Baishakhi ❤️</h2>
@@ -371,7 +425,6 @@
   <script>
     const targetDate = new Date("2026-12-23T00:00:00+05:30").getTime();
 
-    // Exact file names + Polaroid captions
     const photos = [
       { src: "1.jpg.jpg", caption: "My Favorite ❤️" },
       { src: "2.jpg.jpg", caption: "Miss You 🥰" },
@@ -386,6 +439,12 @@
       img.src = p.src;
       preloadedImages.push(img);
     });
+
+    const startScreen = document.getElementById("start-screen");
+    const openBtn = document.getElementById("open-btn");
+    const videoScreen = document.getElementById("video-screen");
+    const introVideo = document.getElementById("intro-video");
+    const skipBtn = document.getElementById("skip-btn");
 
     const noBtn = document.getElementById("no-btn");
     const yesBtn = document.getElementById("yes-btn");
@@ -408,6 +467,27 @@
 
     let started = false;
     let particles = [];
+
+    // Open Surprise -> Play Video with sound
+    openBtn.addEventListener("click", () => {
+      startScreen.style.display = "none";
+      videoScreen.style.display = "flex";
+      introVideo.play().catch(err => {
+        console.log("Video play error:", err);
+        showProposalScreen();
+      });
+    });
+
+    function showProposalScreen() {
+      introVideo.pause();
+      videoScreen.style.display = "none";
+      document.body.style.background = "#ffe6f0";
+      proposalBox.style.display = "block";
+    }
+
+    // Video shesh holei YES/NO screen ashbe
+    introVideo.addEventListener("ended", showProposalScreen);
+    skipBtn.addEventListener("click", showProposalScreen);
 
     function moveNoButton(e) {
       e.preventDefault();
@@ -438,13 +518,12 @@
       bgMusic.play().catch(err => console.log("Audio play error:", err));
 
       startFxLayer();
-      spawnBurst(window.innerWidth / 2, window.innerHeight / 2, 55); // YES Fireworks
+      spawnBurst(window.innerWidth / 2, window.innerHeight / 2, 55);
       startStarsAndHearts();
       startMainHeart();
       startPopupPhotos();
     });
 
-    // Music Toggle
     musicBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       if (bgMusic.paused) {
@@ -456,7 +535,6 @@
       }
     });
 
-    // Secret Letter Modal
     letterBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       letterModal.style.display = "flex";
@@ -471,7 +549,6 @@
       if (e.target === letterModal) letterModal.style.display = "none";
     });
 
-    // Touch / Click Sparkle & Heart Burst anywhere on screen
     function handleTouchBurst(x, y) {
       if (!started || letterModal.style.display === "flex") return;
       spawnBurst(x, y, 16);
@@ -494,8 +571,7 @@
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 4.5 + 1.5;
         particles.push({
-          x,
-          y,
+          x, y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           alpha: 1,
@@ -517,7 +593,7 @@
           const p = particles[i];
           p.x += p.vx;
           p.y += p.vy;
-          p.vy += 0.06; // slight gravity
+          p.vy += 0.06;
           p.alpha -= 0.022;
 
           if (p.alpha <= 0) {
@@ -548,7 +624,6 @@
     function startPopupPhotos() {
       let index = 0;
 
-      // 4-te alada kona, button ar countdown-er theke dure
       const spots = [
         { top: "64px", left: "12px" },
         { top: "64px", right: "12px" },
@@ -615,7 +690,6 @@
       setInterval(updateTimer, 1000);
     }
 
-    // Twinkling Stars + Falling Hearts
     function startStarsAndHearts() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
@@ -648,7 +722,6 @@
       function animateBg() {
         bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
 
-        // Draw twinkling stars
         stars.forEach(s => {
           s.alpha += s.delta;
           if (s.alpha <= 0.1 || s.alpha >= 1) s.delta *= -1;
@@ -659,7 +732,6 @@
           bgCtx.fill();
         });
 
-        // Draw falling hearts
         hearts.forEach(h => {
           bgCtx.globalAlpha = h.opacity;
           bgCtx.font = `${h.size}px Arial`;
